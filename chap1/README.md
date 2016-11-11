@@ -1,0 +1,1 @@
+### Why trump became the president of America?
