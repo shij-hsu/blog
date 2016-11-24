@@ -1,6 +1,10 @@
 ### Notes about Coq's
 
-1. `return` 
+- **CONTENT**
+
+[`return`](#return)  [`Hint`](#hint)  [`decide`](#decide) [`compare`](#compare) [`congruence`](#congruence) [`autorewrite`](#autorewrite) [`||`](#double_dash) [`specialize`](#specialize) [`idtac`](#idtac) [`fail`](#fail) [`solve`](#solve) [`search`](#search) [`fresh`](#fresh)
+
+- <span id="return">`return` </span>
 ```
 (* ProofByReflection.v *)
 Definition partialOut (P:Prop) (x:[P]) :=
@@ -14,25 +18,25 @@ end.
 ```
 This keyword is used to determined the return **type** of the *[match ... with ... end]* syntax. Usually, a function has only one return type, but sometimes we need to definition e.g.-like functions, their return type is not unique, so we use `return` to declarate their vary return types.
 
-2. `Hint`
-
+- <span id="hint">`Hint`</span>
 > Hint Resolve length_O length_S.
 
 We can apply these hints to prove something with `auto`. `Resolve` and `Immediate` have the same meaning for a premise-free hint.
-
 > Hint Extern 1 (sum _ = _) => simpl.
 
 The command to register a custom hint. That is, we provide a pattern to match against goals during proof search. Whenever the pattern matches, a tactic (given to the right of an arrow =>) is attempted. Below, the number 1 gives a priority for this step. Lower priority are tried before higher priorities, which can have a significant effect on proof search time.
 
-3. `decide equality`
+- <span id="decide">`decide equality`</span>
 
 This tactic solves a goal of form `forall x y:R, {x=y}+{~x=y}`, where R is an inductive type such that its constructors do not take proofs or functinos as arguments, nor objects in dependent types.
 
-4. `compare term1 term1`
+
+- <span id="compare">`compare term1 term1`</span>
 
 This tactic compares two given objects `term1` and `term2` of an inductive datatype. If G is the current goal, it leaves the sub-goals `term1 = term2 -> G` and `~term1 = term2 -> G`. The type of `term1` and `term2` must satisfy the same restrictions as in the tactic decide equality.
 
-5. `congruence`(全等)
+
+- <span id="congruence">`congruence`</span>
 
 ```
 Coq < intros.
@@ -48,42 +52,42 @@ No more subgoals.
 ```
 *congruence tries to prove that a hypothesis is equal to the goal or to the negation of another hypothesis.* So it likes repeating rewrite tactics?
 
-6. `autorewrite`
+- <span id="autorewrite">`autorewrite`</span>
 
 See the code in coq/tac/autorewrite.v
 
 Tactic `autorewrite with db in *` does rewriting in hypothesis, as well as in the conclusion. See it in coq/cpdt/ProofSearchByLP.v.
 
-7. `||` 
+- <span id="double_dash">`||` </span>
 
 See the code also in coq/tac/autorewrite.v. 
 
 Tactic `exp1 || exp2` is equivalent to `first [progress exp1 | progress exp2]`.
 
-8. `specialize`
+- <span id="specialize">`specialize`</span>
 
 `specialize (ident term1 term2 ... termn)` is equivalent to `assert(ident' := ident term1 term2 ... termn); clear ident; rename ident' into ident`
 
-9. `idtac` 
+- <span id="idtac">`idtac` </span>
 
 What the fuck tactic means? I think it's trivial.
 
-10. `fail`
+- <span id="fail"> `fail`</span>
 
 It always fail. It is useful for defining other tacticals since it can be caught by try, repeat, match goal, or the branching tacticals. The fail tactic will, however, succeed if all the goals have already been solved.
 
 `fail n`, the number n is failure level.
 
-11. `solve`
+- <span id="solve"> `solve`</span>
 
 `solve [exp1 | exp2 | ... |expn]` use tactics `expi` to solve the goal by order. If all the tactics fail, the tactic fail.
 
-12. `search`
+- <span id="search"> `search`</span>
 
 This command displays the name and type of all objects (hypothesis of the current goal, theorems, axioms, etc) of the current context  whose statement contains qualid . This command is useful to remind
 the user of the name of library lemmas.
 
-13. `fresh`
+- <span id="fresh"> `fresh`</span>
 
 *The expression `fresh component .. component` returns an identifier, it evaluates to an identifier unbound in the goal.*
 

@@ -1,10 +1,10 @@
 # Summary
 
-* [简介](README.md)
-* [第一章](chap1/README.md)
-    * [第一节](chap1/sec1.md)
-    * [第二节](chap1/sec2.md)
-	* [第三节](chap1/sec3.md)
-* [第二章](chap2/README.md)
-    * [第一节](chap2/sec1.md)
+* [Introduction](README.md)
+* [Plotics](chap1/README.md)
+    * [American Presidential Election](chap1/election.md)
+    * [Toad's 5 circles](chap1/elder_circles.md)
+    * [Our country](chap1/our_country.md)
+* [Notes](chap2/README.md)
+    * [Notes about Coq](chap2/coq_notes.md)
 
