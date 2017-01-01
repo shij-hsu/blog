@@ -235,46 +235,33 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h3 id="notes-about-coqs">Notes about Coq&apos;s</h3>
-<ul>
-<li><strong>CONTENT</strong></li>
-</ul>
-<p><a href="#return"><code>return</code></a>  <a href="#hint"><code>Hint</code></a>  <a href="#decide"><code>decide</code></a> <a href="#compare"><code>compare</code></a> <a href="#congruence"><code>congruence</code></a> <a href="#autorewrite"><code>autorewrite</code></a> <a href="#double_dash"><code>||</code></a> <a href="#specialize"><code>specialize</code></a> <a href="#idtac"><code>idtac</code></a> <a href="#fail"><code>fail</code></a> <a href="#solve"><code>solve</code></a> <a href="#search"><code>search</code></a> <a href="#fresh"><code>fresh</code></a></p>
-<ul>
-<li><p><span id="return"><code>return</code> </span></p>
+                                <h2 id="notes-about-coqs">Notes about Coq&apos;s</h2>
+<p>[TOC]</p>
+<h3 id="return">return</h3>
 <pre><code>(* ProofByReflection.v *)
 Definition partialOut (P:Prop) (x:[P]) :=
 match x return (match x with
-          | Proved _ =&gt;P
-          | Uncertain =&gt;True
-          end) with
+            | Proved _ =&gt;P
+            | Uncertain =&gt;True
+            end) with
 | Proved pf =&gt; pf
 | Uncertain =&gt; I
 end.
 </code></pre><p>This keyword is used to determined the return <strong>type</strong> of the <em>[match ... with ... end]</em> syntax. Usually, a function has only one return type, but sometimes we need to definition e.g.-like functions, their return type is not unique, so we use <code>return</code> to declarate their vary return types.</p>
-</li>
-<li><p><span id="hint"><code>Hint</code></span></p>
+<h3 id="hint">Hint</h3>
 <blockquote>
 <p>Hint Resolve length_O length_S.</p>
 </blockquote>
-</li>
-</ul>
 <p>We can apply these hints to prove something with <code>auto</code>. <code>Resolve</code> and <code>Immediate</code> have the same meaning for a premise-free hint.</p>
 <blockquote>
 <p>Hint Extern 1 (sum <em> = </em>) =&gt; simpl.</p>
 </blockquote>
 <p>The command to register a custom hint. That is, we provide a pattern to match against goals during proof search. Whenever the pattern matches, a tactic (given to the right of an arrow =&gt;) is attempted. Below, the number 1 gives a priority for this step. Lower priority are tried before higher priorities, which can have a significant effect on proof search time.</p>
-<ul>
-<li><span id="decide"><code>decide equality</code></span></li>
-</ul>
+<h3 id="decide-equality">decide equality</h3>
 <p>This tactic solves a goal of form <code>forall x y:R, {x=y}+{~x=y}</code>, where R is an inductive type such that its constructors do not take proofs or functinos as arguments, nor objects in dependent types.</p>
-<ul>
-<li><span id="compare"><code>compare term1 term1</code></span></li>
-</ul>
+<h3 id="compare-term1-term1">compare term1 term1</h3>
 <p>This tactic compares two given objects <code>term1</code> and <code>term2</code> of an inductive datatype. If G is the current goal, it leaves the sub-goals <code>term1 = term2 -&gt; G</code> and <code>~term1 = term2 -&gt; G</code>. The type of <code>term1</code> and <code>term2</code> must satisfy the same restrictions as in the tactic decide equality.</p>
-<ul>
-<li><span id="congruence"><code>congruence</code></span></li>
-</ul>
+<h3 id="congruence">congruence</h3>
 <pre><code>Coq &lt; intros.
 1 subgoal
 H : a = f a
@@ -286,41 +273,25 @@ g a b = a
 Coq &lt; congruence.
 No more subgoals.
 </code></pre><p><em>congruence tries to prove that a hypothesis is equal to the goal or to the negation of another hypothesis.</em> So it likes repeating rewrite tactics?</p>
-<ul>
-<li><span id="autorewrite"><code>autorewrite</code></span></li>
-</ul>
+<h3 id="autorewrite">autorewrite</h3>
 <p>See the code in coq/tac/autorewrite.v</p>
 <p>Tactic <code>autorewrite with db in *</code> does rewriting in hypothesis, as well as in the conclusion. See it in coq/cpdt/ProofSearchByLP.v.</p>
-<ul>
-<li><span id="double_dash"><code>||</code> </span></li>
-</ul>
+<h3 id="">||</h3>
 <p>See the code also in coq/tac/autorewrite.v. </p>
 <p>Tactic <code>exp1 || exp2</code> is equivalent to <code>first [progress exp1 | progress exp2]</code>.</p>
-<ul>
-<li><span id="specialize"><code>specialize</code></span></li>
-</ul>
+<h3 id="specialize">specialize</h3>
 <p><code>specialize (ident term1 term2 ... termn)</code> is equivalent to <code>assert(ident&apos; := ident term1 term2 ... termn); clear ident; rename ident&apos; into ident</code></p>
-<ul>
-<li><span id="idtac"><code>idtac</code> </span></li>
-</ul>
+<h3 id="idtac">idtac</h3>
 <p>What the fuck tactic means? I think it&apos;s trivial.</p>
-<ul>
-<li><span id="fail"> <code>fail</code></span></li>
-</ul>
+<h3 id="fail">fail</h3>
 <p>It always fail. It is useful for defining other tacticals since it can be caught by try, repeat, match goal, or the branching tacticals. The fail tactic will, however, succeed if all the goals have already been solved.</p>
 <p><code>fail n</code>, the number n is failure level.</p>
-<ul>
-<li><span id="solve"> <code>solve</code></span></li>
-</ul>
+<h3 id="solve">solve</h3>
 <p><code>solve [exp1 | exp2 | ... |expn]</code> use tactics <code>expi</code> to solve the goal by order. If all the tactics fail, the tactic fail.</p>
-<ul>
-<li><span id="search"> <code>search</code></span></li>
-</ul>
+<h3 id="search">search</h3>
 <p>This command displays the name and type of all objects (hypothesis of the current goal, theorems, axioms, etc) of the current context  whose statement contains qualid . This command is useful to remind
 the user of the name of library lemmas.</p>
-<ul>
-<li><span id="fresh"> <code>fresh</code></span></li>
-</ul>
+<h3 id="fresh">fresh</h3>
 <p><em>The expression <code>fresh component .. component</code> returns an identifier, it evaluates to an identifier unbound in the goal.</em></p>
 <p><strong>What does it mean???</strong>  WHY follow code is wrong in Coq?</p>
 <pre><code>Theorem t5&apos; : (forall x:nat, S x &gt; x ) -&gt; 2 &gt; 1.
@@ -328,6 +299,10 @@ the user of the name of library lemmas.</p>
   let H&apos;:=fresh &quot;H&quot; in apply (H&apos; 1).
   ------------------------------------------
   Error: The variable H0 was not found in the current environment.
+</code></pre><h3 id="instance">Instance</h3>
+<p>The Instance command is used to declare a type class instance named ident of the class Class with parameters t 1 to t n and fields b 1 to b i , where each field must be a declared field of the class.</p>
+<pre><code>Instance LS: listspec _list _tail.
+Proof. eapply mk_listspec; reflexivity. Defined.
 </code></pre>
                                 
                                 </section>
@@ -367,7 +342,7 @@ the user of the name of library lemmas.</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Notes about Coq","level":"1.3.1","depth":2,"previous":{"title":"Notes","level":"1.3","depth":1,"path":"chap2/README.md","ref":"chap2/README.md","articles":[{"title":"Notes about Coq","level":"1.3.1","depth":2,"path":"chap2/coq_notes.md","ref":"chap2/coq_notes.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["livereload"],"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"chap2/coq_notes.md","mtime":"2016-11-24T14:19:58.366Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2016-11-24T13:48:39.943Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Notes about Coq","level":"1.3.1","depth":2,"previous":{"title":"Notes","level":"1.3","depth":1,"path":"chap2/README.md","ref":"chap2/README.md","articles":[{"title":"Notes about Coq","level":"1.3.1","depth":2,"path":"chap2/coq_notes.md","ref":"chap2/coq_notes.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["livereload"],"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"ignoreSpecialCharacters":false,"maxIndexSize":1000000},"sharing":{"all":["facebook","google","instapaper","twitter","weibo"],"facebook":true,"google":false,"instapaper":false,"twitter":true,"vk":false,"weibo":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"theme-default":{"showLevel":false,"styles":{"ebook":"styles/ebook.css","epub":"styles/epub.css","mobi":"styles/mobi.css","pdf":"styles/pdf.css","print":"styles/print.css","website":"styles/website.css"}}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"ebook":"styles/ebook.css","epub":"styles/epub.css","mobi":"styles/mobi.css","pdf":"styles/pdf.css","print":"styles/print.css","website":"styles/website.css"}},"file":{"path":"chap2/coq_notes.md","mtime":"2017-01-01T22:07:32.188Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-01-01T16:01:45.866Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
