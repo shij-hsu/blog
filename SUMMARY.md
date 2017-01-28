@@ -1,10 +1,13 @@
 # Summary
 
 * [Introduction](README.md)
-* [Plotics](chap1/README.md)
-    * [American Presidential Election](chap1/election.md)
-    * [Toad's 5 circles](chap1/elder_circles.md)
-    * [Our country](chap1/our_country.md)
-* [Notes](chap2/README.md)
-    * [Notes about Coq](chap2/coq_notes.md)
+* [Plotics](plotics/README.md)
+    * [American Presidential Election](plotics/election.md)
+    * [Toad's 5 circles](plotics/elder_circles.md)
+    * [Our country](plotics/our_country.md)
+* [Notes](notes/README.md)
+    * [Notes about Coq](notes/coq_notes.md)
+    * [Notes in arxiv](notes/arxiv_notes.md)
+    * [Proof General 安装指南](notes/PG.md)
+
 
