@@ -9,5 +9,6 @@
     * [Notes about Coq](notes/coq_notes.md)
     * [Notes in arxiv](notes/arxiv_notes.md)
     * [Proof General 安装指南](notes/PG.md)
+    * [如何配置Spacemacs](notes/如何配置Spacemacs.md)
 
 
