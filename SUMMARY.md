@@ -10,5 +10,6 @@
     * [Notes in arxiv](notes/arxiv_notes.md)
     * [Proof General 安装指南](notes/PG.md)
     * [如何配置Spacemacs](notes/如何配置Spacemacs.md)
+    * [婚礼祝福四字成语](notes/婚礼祝福四字成语.md)
 
 
